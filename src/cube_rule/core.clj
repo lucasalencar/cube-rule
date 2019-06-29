@@ -1,6 +1,6 @@
 (ns cube-rule.core
   (:refer-clojure :exclude [==])
-  (:require [clojure.core.logic :as logic]
+  (:require [clojure.core.logic :as l]
             [clojure.core.logic.pldb :as pldb]))
 
 (pldb/db-rel eatable eatable-thing living-being)
@@ -68,12 +68,12 @@
 
 (defn cube-ruleo
   [food category]
-  (logic/fresh [sides]
+  (l/fresh [sides]
     (cube-rule sides category)
     (food-starch-sides sides food)))
 
 (pldb/with-db cube-rule-facts
-  (logic/run* [q]
-    (logic/fresh [food]
+  (l/run* [q]
+    (l/fresh [food]
       (cube-ruleo food :quiche)
-      (logic/== q food))))
+      (l/== q food))))
