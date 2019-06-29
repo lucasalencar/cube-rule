@@ -6,4 +6,4 @@
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/core.logic "0.8.11"]]
   :repl-options {:init-ns cube-rule.core}
-  :main cube-rule.core)
+  :main cube-rule.main)
