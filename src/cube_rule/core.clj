@@ -1,6 +1,7 @@
 (ns cube-rule.core)
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(defn -main
+  [& args]
+  (println "Cube rule has started")
+  ;; Here comes the main code
+  )

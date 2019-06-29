@@ -10,4 +10,6 @@ Experiment with [clojure/core.logic](https://github.com/clojure/core.logic) pack
 
 ## Usage
 
-FIXME
+```bash
+lein run
+```
