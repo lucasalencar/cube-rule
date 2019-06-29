@@ -16,55 +16,64 @@
    [eatable :cat-food :cat]
    [eatable :fish :cat]))
 
-(pldb/db-rel toast food)
-(pldb/db-rel sandwich food)
-(pldb/db-rel taco food)
-(pldb/db-rel sushi food)
-(pldb/db-rel quiche food)
-(pldb/db-rel calzone food)
-(pldb/db-rel salad food)
+(pldb/db-rel cube-rule starch-sides category)
+(pldb/db-rel food-starch-sides starch-sides food)
 
 (def cube-rule-facts
   (pldb/db
-   [toast :pizza]
-   [toast :nigiri-sushi]
-   [toast :pumpkin-pie-slice]
+   [cube-rule 1 :toast]
+   [cube-rule 2 :sandwich]
+   [cube-rule 3 :taco]
+   [cube-rule 4 :sushi]
+   [cube-rule 5 :quiche]
+   [cube-rule 6 :calzone]
+   [cube-rule 0 :salad]
 
-   [sandwich :lasagna]
-   [sandwich :toast]
-   [sandwich :quesadilla]
+   [food-starch-sides 1 :pizza]
+   [food-starch-sides 1 :nigiri-sushi]
+   [food-starch-sides 1 :pumpkin-pie-slice]
 
-   [taco :hot-dog]
-   [taco :sub-sandwich]
-   [taco :slice-of-pie]
+   [food-starch-sides 2 :lasagna]
+   [food-starch-sides 2 :toast]
+   [food-starch-sides 2 :quesadilla]
 
-   [sushi :falafel-wrap]
-   [sushi :pigs-in-a-blanket]
-   [sushi :enchilada]
+   [food-starch-sides 3 :hot-dog]
+   [food-starch-sides 3 :sub-sandwich]
+   [food-starch-sides 3 :slice-of-pie]
 
-   [quiche :cheesecake]
-   [quiche :soup]
-   [quiche :falafel-pita]
-   [quiche :deep-dish-pizza]
-   [quiche :salad]
-   [quiche :key-lime-pie]
+   [food-starch-sides 4 :falafel-wrap]
+   [food-starch-sides 4 :pigs-in-a-blanket]
+   [food-starch-sides 4 :enchilada]
 
+   [food-starch-sides 5 :cheesecake]
+   [food-starch-sides 5 :soup-in-a-bread-bowl]
+   [food-starch-sides 5 :falafel-pita]
+   [food-starch-sides 5 :deep-dish-pizza]
+   [food-starch-sides 5 :salad-in-a-bread-bowl]
+   [food-starch-sides 5 :key-lime-pie]
 
-   [calzone :burrito]
-   [calzone :corn-dog]
-   [calzone :pie]
-   [calzone :dumplings]
-   [calzone :pop-tarts]
-   [calzone :uncrustables]
+   [food-starch-sides 6 :burrito]
+   [food-starch-sides 6 :corn-dog]
+   [food-starch-sides 6 :pie-whole]
+   [food-starch-sides 6 :dumplings]
+   [food-starch-sides 6 :pop-tarts]
+   [food-starch-sides 6 :uncrustables-unbitten]
 
+   [food-starch-sides 0 :steak]
+   [food-starch-sides 0 :mashed-potatoes]
+   [food-starch-sides 0 :fried-rice]
+   [food-starch-sides 0 :spaghetti]
+   [food-starch-sides 0 :poutine]
+   [food-starch-sides 0 :soup-a-wet-salad]))
 
-   [salad :steak]
-   [salad :mashed-potatoes]
-   [salad :fried-rice]
-   [salad :spaghetti]
-   [salad :poutine]
-   [salad :soup]))
+(defn cube-ruleo
+  [food category]
+  (logic/fresh [sides]
+    (cube-rule sides category)
+    (food-starch-sides sides food)))
 
 (pldb/with-db cube-rule-facts
-  (logic/run* [category food]
-    (toast food)))
+  (logic/run* [q]
+    (logic/fresh [food]
+      (cube-ruleo food :quiche)
+      (logic/== q food))))
